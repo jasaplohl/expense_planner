@@ -15,10 +15,12 @@ class App extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(centerTitle: true, title: Text(appName),),
-        body: Container(
-          child: TransactionPage(),
-          margin: EdgeInsets.all(10),
-        ) 
+        body: SingleChildScrollView(
+          child: Container(
+            child: TransactionPage(),
+            margin: EdgeInsets.all(10),
+          )
+        )
       )
     );
   }

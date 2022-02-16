@@ -15,6 +15,18 @@ class TransactionInput extends StatelessWidget {
   
   TransactionInput(this.addTransaction);
 
+  void submitTransaction() {
+    final String title = titleController.text.trim();
+    final double amount = double.parse(amountController.text);
+
+    if(title.isNotEmpty && amount > 0) {
+      addTransaction(title, amount);
+    }
+
+    titleController.text = "";
+    amountController.text = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,15 +40,11 @@ class TransactionInput extends StatelessWidget {
             decoration: amountInputDecoration, 
             keyboardType: TextInputType.number,
             controller: amountController,
+            onSubmitted: (_) => submitTransaction(),
           ),
           ElevatedButton(
             onPressed: () => {
-              addTransaction(
-                titleController.text,
-                double.parse(amountController.text)
-              ),
-              titleController.text = "",
-              amountController.text = ""
+              submitTransaction()
             }, 
             child: Text("Add Transaction")
           )

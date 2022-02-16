@@ -11,12 +11,14 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ...transactions.map((transaction) {
-          return TransactionCard(transaction);
-        })
-      ],
+    return Container(
+      height: 300,
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return TransactionCard(transactions[index]);
+        },
+        itemCount: transactions.length,
+      ),
     );
   }
 

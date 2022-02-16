@@ -20,13 +20,11 @@ class _TransactionPageState extends State<TransactionPage> {
   ];
 
   void _addTransaction(String title, double amount) {
-    if(title.isNotEmpty && amount > 0) {
-      Transaction newTransaction = Transaction(title: title, amount: amount, timeStamp: DateTime.now());
-      
-      setState(() {
-        _transactions.add(newTransaction);
-      });
-    }
+    Transaction newTransaction = Transaction(title: title, amount: amount, timeStamp: DateTime.now());
+    
+    setState(() {
+      _transactions.add(newTransaction);
+    });
   }
 
   @override
