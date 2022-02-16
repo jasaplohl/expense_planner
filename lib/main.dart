@@ -1,28 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/transaction_page.dart';
+import './widgets/app_content.dart';
 
 void main() {
-  runApp(App());
+  runApp(Main());
 }
 
-class App extends StatelessWidget {
+class Main extends StatelessWidget {
 
-  final String appName = "Expense planner";
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(centerTitle: true, title: Text(appName),),
-        body: SingleChildScrollView(
-          child: Container(
-            child: TransactionPage(),
-            margin: EdgeInsets.all(10),
-          )
-        )
-      )
+      home: AppContent()
     );
   }
-
 }

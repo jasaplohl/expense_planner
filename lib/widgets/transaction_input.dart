@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TransactionInput extends StatelessWidget {
+class TransactionInput extends StatefulWidget {
 
   final Function addTransaction;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  
+  TransactionInput(this.addTransaction);
+
+  @override
+  _TransactionInputState createState() => _TransactionInputState();
+
+}
+
+class _TransactionInputState extends State<TransactionInput> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
 
   final InputDecoration titleInputDecoration = const InputDecoration(
     labelText: "Title"
@@ -13,14 +22,18 @@ class TransactionInput extends StatelessWidget {
     labelText: "Amount"
   );
   
-  TransactionInput(this.addTransaction);
 
   void submitTransaction() {
     final String title = titleController.text.trim();
-    final double amount = double.parse(amountController.text);
+    double amount;
+    if(amountController.text.isNotEmpty) {
+      amount = double.parse(amountController.text);
+    } else {
+      amount = 0;
+    }
 
     if(title.isNotEmpty && amount > 0) {
-      addTransaction(title, amount);
+      widget.addTransaction(title, amount);
     }
 
     titleController.text = "";
@@ -34,13 +47,13 @@ class TransactionInput extends StatelessWidget {
         children: [
           TextField(
             decoration: titleInputDecoration,
+            keyboardType: TextInputType.text,
             controller: titleController,
           ),
           TextField(
             decoration: amountInputDecoration, 
             keyboardType: TextInputType.number,
             controller: amountController,
-            onSubmitted: (_) => submitTransaction(),
           ),
           ElevatedButton(
             onPressed: () => {
@@ -52,5 +65,4 @@ class TransactionInput extends StatelessWidget {
       ),
     );
   }
-
 }
