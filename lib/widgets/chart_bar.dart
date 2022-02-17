@@ -41,8 +41,11 @@ class ChartBar extends StatelessWidget {
             ],
           ),
         ),
-        FittedBox(
-          child: Text("\$ ${sum.toStringAsFixed(0)}")
+        Container(
+          height: 20,
+          child: FittedBox(
+            child: Text("\$ ${sum.toStringAsFixed(0)}")
+          ),
         )
       ],
     );

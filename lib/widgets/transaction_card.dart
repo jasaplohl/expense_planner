@@ -7,61 +7,46 @@ class TransactionCard extends StatelessWidget {
 
   final Transaction transaction;
 
-  final TextStyle amountStyle = TextStyle(
-    color: Colors.red[300],
+  final TextStyle amountStyle = const TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 20
-  );
-  final TextStyle itemStyle = const TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 15
-  );
-  final TextStyle dateStyle = const TextStyle(
-    fontWeight: FontWeight.bold,
-    color: Colors.grey,
-    fontSize: 13
-  );
-
-  final EdgeInsets margin = const EdgeInsets.symmetric(
-    vertical: 10,
-    horizontal: 15
   );
 
   TransactionCard(this.transaction);
 
+  String get formattedDate {
+    return DateFormat.yMMMd().format(transaction.timeStamp);
+  }
+
+  void onDeleteClick() {
+    print("DELETING");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction.title,
-                  style: itemStyle,
-                ),
-                Text(
-                  DateFormat.yMMMd().format(transaction.timeStamp),
-                  style: dateStyle,
-                ),
-              ],
-            ),
-            margin: margin,
-          ),
-          Container(
-            margin: margin,
-            child: Text(
-              "\$ -${transaction.amount.toStringAsFixed(2)}",
-              style: amountStyle,
+      margin: EdgeInsets.all(5),
+      elevation: 5,
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 30,
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: FittedBox(
+              child: Text(
+                "\$ -${transaction.amount.toStringAsFixed(2)}",
+                style: amountStyle,
+              )
             ),
           )
-        ],
-      ),
-      elevation: 5,
-      color: Theme.of(context).primaryColorLight,
+        ),
+        title: Text(transaction.title),
+        subtitle: Text(formattedDate),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: onDeleteClick,
+        )
+      )
     );
   }
 
