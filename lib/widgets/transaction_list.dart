@@ -13,12 +13,16 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return TransactionCard(transactions[index]);
-        },
-        itemCount: transactions.length,
-      ),
+      child: 
+        transactions.isNotEmpty ?
+          ListView.builder(
+            itemBuilder: (context, index) {
+              return TransactionCard(transactions[index]);
+            },
+            itemCount: transactions.length,
+          )
+        :
+          Image.asset("assets/images/no_items.png", fit: BoxFit.cover),
     );
   }
 

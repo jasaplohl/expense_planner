@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import './transaction_input.dart';
 import './transaction_list.dart';
+import './chart.dart';
 
 class AppContent extends StatefulWidget {
 
@@ -16,9 +17,9 @@ class _AppContentState extends State<AppContent> {
   final Icon addIcon = const Icon(Icons.add);
 
   final List<Transaction> _transactions = [
-    Transaction(title: "Shoes", amount: 99.99, timeStamp: DateTime.now()),
-    Transaction(title: "Pizza", amount: 10.00, timeStamp: DateTime.now()),
-    Transaction(title: "Gas", amount: 35.43, timeStamp: DateTime.now()),
+    // Transaction(title: "Shoes", amount: 99.99, timeStamp: DateTime.now()),
+    // Transaction(title: "Pizza", amount: 10.00, timeStamp: DateTime.now()),
+    // Transaction(title: "Gas", amount: 35.43, timeStamp: DateTime.now()),
   ];
 
   void _onNewTransactionClick(BuildContext ctx) {
@@ -38,6 +39,15 @@ class _AppContentState extends State<AppContent> {
     });
   }
 
+  // Returns the transactions of the last  days
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((transaction) {
+      return transaction.timeStamp.isAfter(
+        DateTime.now().subtract(Duration(days: 7))
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +62,12 @@ class _AppContentState extends State<AppContent> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            child: TransactionList(_transactions),
+            child: Column(
+              children: [
+                Chart(_recentTransactions),
+                TransactionList(_transactions),
+              ],
+            ),
             margin: EdgeInsets.all(10),
           )
         ),
