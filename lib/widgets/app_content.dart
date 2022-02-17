@@ -31,8 +31,8 @@ class _AppContentState extends State<AppContent> {
     );
   }
 
-  void _addTransaction(String title, double amount) {
-    Transaction newTransaction = Transaction(title: title, amount: amount, timeStamp: DateTime.now());
+  void _addTransaction(String title, double amount, DateTime date) {
+    Transaction newTransaction = Transaction(title: title, amount: amount, timeStamp: date);
     
     setState(() {
       _transactions.add(newTransaction);

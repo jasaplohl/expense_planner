@@ -30,6 +30,11 @@ ThemeData _customTheme = ThemeData(
       fontStyle: FontStyle.italic, 
       fontSize: fontSize,
       fontWeight: FontWeight.bold
+    )
+  ),
+  textTheme: const TextTheme(
+      button: TextStyle(
+        fontWeight: FontWeight.bold
       )
   )
 );
