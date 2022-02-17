@@ -32,37 +32,49 @@ class _TransactionInputState extends State<TransactionInput> {
       amount = 0;
     }
 
-    if(title.isNotEmpty && amount > 0) {
+    if(isDataValid(title, amount)) {
       widget.addTransaction(title, amount);
+      // Close the modal sheet
+      // Context is defined class wide in the State class
+      Navigator.of(context).pop();
+      clearInputFields();
     }
 
+  }
+
+  void clearInputFields() {
     titleController.text = "";
     amountController.text = "";
   }
 
+  bool isDataValid(String title, double amount) {
+    bool valid = title.isNotEmpty && amount > 0;
+    return valid;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          TextField(
-            decoration: titleInputDecoration,
-            keyboardType: TextInputType.text,
-            controller: titleController,
-          ),
-          TextField(
-            decoration: amountInputDecoration, 
-            keyboardType: TextInputType.number,
-            controller: amountController,
-          ),
-          ElevatedButton(
-            onPressed: () => {
-              submitTransaction()
-            }, 
-            child: Text("Add Transaction")
-          )
-        ]
-      ),
+    return Column(
+      children: [
+        TextField(
+          decoration: titleInputDecoration,
+          keyboardType: TextInputType.text,
+          controller: titleController,
+          onSubmitted: (_) => submitTransaction(),
+        ),
+        TextField(
+          decoration: amountInputDecoration, 
+          keyboardType: TextInputType.number,
+          controller: amountController,
+          onSubmitted: (_) => submitTransaction(),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            submitTransaction();
+          }, 
+          child: Text("Add Transaction")
+        )
+      ]
     );
   }
 }
