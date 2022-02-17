@@ -39,6 +39,14 @@ class _AppContentState extends State<AppContent> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) {
+        return element.id == id;
+      });
+    });
+  }
+
   // Returns the transactions of the last  days
   List<Transaction> get _recentTransactions {
     return _transactions.where((transaction) {
@@ -65,7 +73,7 @@ class _AppContentState extends State<AppContent> {
             child: Column(
               children: [
                 Chart(_recentTransactions),
-                TransactionList(_transactions),
+                TransactionList(_transactions, _deleteTransaction),
               ],
             ),
             margin: EdgeInsets.all(10),

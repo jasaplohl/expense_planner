@@ -6,20 +6,21 @@ import '../models/transaction.dart';
 class TransactionCard extends StatelessWidget {
 
   final Transaction transaction;
+  final Function deleteTransaction;
 
   final TextStyle amountStyle = const TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 20
   );
 
-  TransactionCard(this.transaction);
+  TransactionCard(this.transaction, this.deleteTransaction);
 
   String get formattedDate {
     return DateFormat.yMMMd().format(transaction.timeStamp);
   }
 
   void onDeleteClick() {
-    print("DELETING");
+    deleteTransaction(transaction.id);
   }
 
   @override
@@ -44,6 +45,7 @@ class TransactionCard extends StatelessWidget {
         subtitle: Text(formattedDate),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
+          color: Theme.of(context).errorColor,
           onPressed: onDeleteClick,
         )
       )
