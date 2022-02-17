@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
-import './chart_column.dart';
+import 'chart_bar.dart';
 
 class Chart extends StatelessWidget {
 
@@ -28,6 +28,12 @@ class Chart extends StatelessWidget {
     });
   } 
 
+  double get totalSpending {
+    return getGrouppedTransactionsByDay.fold(0.0, (sum, item) {
+      return sum + item["amount"];
+    });
+  }
+
   bool doTheDatesMatch(DateTime date01, DateTime date02) {
     if(date01.day == date02.day &&
       date01.month == date02.month &&
@@ -44,14 +50,20 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ...grouppedTransactions.map((dataForDay) {
-            return ChartColumn(dataForDay["day"], dataForDay["amount"]);
-          })
-        ]
-      ),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ...grouppedTransactions.map((dataForDay) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(dataForDay["day"], dataForDay["amount"], totalSpending)
+              );
+            })
+          ]
+        )
+      )
     );
   }
 
