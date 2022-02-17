@@ -61,7 +61,7 @@ class TransactionCard extends StatelessWidget {
         ],
       ),
       elevation: 5,
-      color: Colors.blue[100],
+      color: Theme.of(context).primaryColorLight,
     );
   }
 
