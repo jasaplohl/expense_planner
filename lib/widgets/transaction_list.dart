@@ -12,19 +12,15 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      child: 
-        transactions.isNotEmpty ?
-          ListView.builder(
-            itemBuilder: (context, index) {
-              return TransactionCard(transactions[index], deleteTransaction);
-            },
-            itemCount: transactions.length,
-          )
-        :
-          Image.asset("assets/images/no_items.png", fit: BoxFit.cover),
-    );
+    return transactions.isNotEmpty ?
+      ListView.builder(
+        itemBuilder: (context, index) {
+          return TransactionCard(transactions[index], deleteTransaction);
+        },
+        itemCount: transactions.length,
+      )
+    :
+      Image.asset("assets/images/no_items.png", fit: BoxFit.cover);
   }
 
 }

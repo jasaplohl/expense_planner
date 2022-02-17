@@ -17,9 +17,9 @@ class _AppContentState extends State<AppContent> {
   final Icon addIcon = const Icon(Icons.add);
 
   final List<Transaction> _transactions = [
-    // Transaction(title: "Shoes", amount: 99.99, timeStamp: DateTime.now()),
-    // Transaction(title: "Pizza", amount: 10.00, timeStamp: DateTime.now()),
-    // Transaction(title: "Gas", amount: 35.43, timeStamp: DateTime.now()),
+    Transaction(title: "Shoes", amount: 99.99, timeStamp: DateTime.now()),
+    Transaction(title: "Pizza", amount: 10.00, timeStamp: DateTime.now()),
+    Transaction(title: "Gas", amount: 35.43, timeStamp: DateTime.now()),
   ];
 
   void _onNewTransactionClick(BuildContext ctx) {
@@ -56,24 +56,37 @@ class _AppContentState extends State<AppContent> {
     }).toList();
   }
 
+  double getPercentOfHeight(double percent, BuildContext ctx, AppBar appBar) {
+    double availableHeight = MediaQuery.of(ctx).size.height - appBar.preferredSize.height;
+    availableHeight -= (MediaQuery.of(ctx).padding.top + MediaQuery.of(ctx).padding.bottom);
+    return availableHeight * percent / 100;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final AppBar appBar = AppBar(
+      title: Text(appName),
+      actions: [
+        IconButton(
+          onPressed: () => _onNewTransactionClick(context), 
+          icon: addIcon
+        )
+      ],
+    );
     return Scaffold(
-        appBar: AppBar(
-          title: Text(appName),
-          actions: [
-            IconButton(
-              onPressed: () => _onNewTransactionClick(context), 
-              icon: addIcon
-            )
-          ],
-        ),
+        appBar: appBar,
         body: SingleChildScrollView(
           child: Container(
             child: Column(
               children: [
-                Chart(_recentTransactions),
-                TransactionList(_transactions, _deleteTransaction),
+                Container(
+                  height: getPercentOfHeight(30, context, appBar),
+                  child: Chart(_recentTransactions)
+                ),
+                Container(
+                  height: getPercentOfHeight(70, context, appBar),
+                  child: TransactionList(_transactions, _deleteTransaction)
+                )
               ],
             ),
             margin: EdgeInsets.all(10),

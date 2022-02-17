@@ -75,37 +75,44 @@ class _TransactionInputState extends State<TransactionInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          TextField(
-            decoration: titleInputDecoration,
-            keyboardType: TextInputType.text,
-            controller: titleController,
-            onSubmitted: (_) => submitTransaction(),
-          ),
-          TextField(
-            decoration: amountInputDecoration, 
-            keyboardType: TextInputType.number,
-            controller: amountController,
-            onSubmitted: (_) => submitTransaction(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(_date == null ? "No Date" : DateFormat("dd. MM. yyyy").format(_date as DateTime)),
-              TextButton(onPressed: openDatePicker, child: Text("Choose Date"))
-            ],
-          ),
-          ElevatedButton(
-            onPressed: () {
-              submitTransaction();
-            }, 
-            child: Text("Add Transaction")
-          )
-        ]
-      )
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.only(
+          top: 10, 
+          left: 10, 
+          right: 10, 
+          bottom: MediaQuery.of(context).viewInsets.bottom + 10
+        ),
+        child: Column(
+          children: [
+            TextField(
+              decoration: titleInputDecoration,
+              keyboardType: TextInputType.text,
+              controller: titleController,
+              onSubmitted: (_) => submitTransaction(),
+            ),
+            TextField(
+              decoration: amountInputDecoration, 
+              keyboardType: TextInputType.number,
+              controller: amountController,
+              onSubmitted: (_) => submitTransaction(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(_date == null ? "No Date" : DateFormat("dd. MM. yyyy").format(_date as DateTime)),
+                TextButton(onPressed: openDatePicker, child: Text("Choose Date"))
+              ],
+            ),
+            ElevatedButton(
+              onPressed: () {
+                submitTransaction();
+              }, 
+              child: Text("Add Transaction")
+            )
+          ]
+        )
+      ),
     );
   }
 }
